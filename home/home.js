@@ -10,7 +10,7 @@ angular.module('myApp.home', ['ngRoute'])
 }])
 
 .controller('HomeCtrl', ['$scope',function($scope) {
-	$scope.welcomeMessage = "TESTING DATA";
+	$scope.welcomeMessage = "Home Level Welcome";
     
     $scope.sectionsContent = [
         {
@@ -26,4 +26,8 @@ angular.module('myApp.home', ['ngRoute'])
          text: 'Text content for Section 3. Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.'
         }
     ];
+}])
+
+.controller('SubHomeCtrl', ['$scope',function($scope) {
+	$scope.welcomeMessage = "Sub Home Level Welcome";
 }]);

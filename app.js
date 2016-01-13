@@ -10,4 +10,7 @@ angular.module('myApp', [
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/home'});
+}])
+.run(['$rootScope',function($rootScope){
+	$rootScope.welcomeMessage = "Main App Level Welcome";
 }]);
