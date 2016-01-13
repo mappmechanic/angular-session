@@ -6,12 +6,17 @@
         <p>{{ $parent.welcomeMessage }}</p>
         <p>{{ welcomeMessage }}</p>
         <p ng-controller="SubHomeCtrl">
-        {{ welcomeMessage }}
-        <br>
-        {{ $parent.welcomeMessage }}<br>
-        {{ $parent.$parent.welcomeMessage }}
+        Product Index - <input type="number" ng-model="selectedProductIndex"><br>
+        <span ng-if="products[selectedProductIndex-1]">
+         {{ products[selectedProductIndex-1] }} - Cost <input type="text" ng-model="cost"> - Qty <input type="number" ng-model="quantity"> <br><br>
+         <strong>Amount : {{ cost * quantity }}</strong>
+        <span>
+        <br><br>
+        Welcome {{ user.firstname + " " + user.lastname + "("+user['age']+")" }}
         </p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a>
+
+        </p>
       </div>
     </div>
 
