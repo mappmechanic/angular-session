@@ -9,6 +9,21 @@ angular.module('myApp.home', ['ngRoute'])
   });
 }])
 
-.controller('HomeCtrl', [function() {
-
+.controller('HomeCtrl', ['$scope',function($scope) {
+	$scope.welcomeMessage = "TESTING DATA";
+    
+    $scope.sectionsContent = [
+        {
+         name: 'Section 1 223',
+         text: 'Text content for Section 1. Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.'
+        },
+        {
+         name: 'Section 2 3534',
+         text: 'Text content for Section 2. Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.'
+        },
+        {
+         name: 'Section 3 4355',
+         text: 'Text content for Section 3. Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.'
+        }
+    ];
 }]);
