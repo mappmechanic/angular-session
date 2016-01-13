@@ -1,0 +1,180 @@
+#Step1: 
+Modify the name of view2 folder and files to users.
+Change view2.js to users.module.js
+
+'use strict';
+
+angular.module('myApp.users', ['ngRoute'])
+
+.config(['$routeProvider', function($routeProvider) {
+  $routeProvider.when('/users', {
+    templateUrl: 'users/usersList.html',
+    controller: 'UsersCtrl'
+  });
+}]);
+
+#Step2:
+Create a separate file for Controller: usersCtrl.js
+Just register an empty Controller named 'UsersCtrl' with the module 'myApp.users'
+
+'use strict';
+
+angular.module('myApp.users')
+
+.controller('UsersCtrl', ['$scope',function($scope) {
+  console.log('Users Controller Initialized');
+
+}]);
+
+
+Also, change view2.html to usersList.html
+
+#Step3:
+Update references of view2.js in index.html to the following references:
+	<script src="users/users.module.js"></script>
+	<script src="users/usersCtrl.js"></script>
+
+Update index.html to change the name and url of second menu item to Users route.
+
+#Step4:
+Add Dummy Data to the Users Module using value and constant provider
+
+.value('usersData',[
+    {
+      username:'john',
+      location:'Los Angeles'
+    },
+    {
+      username:'madison',
+      location:'New York'
+    },
+    {
+      username:'vivek',
+      location:'New Delhi'
+    },
+    {
+      username:'alice',
+      location:'London'
+    },
+    {
+      username:'sherlock',
+      location:'Southampton'
+    },
+    {
+      username:'rahul',
+      location:'Bangalore'
+    },
+]);
+
+#Step5:
+Update the Controller with following logic.
+
+
+var usersCtrlFunction = function($scope,usersData) {
+    console.log(usersData);
+    
+    $scope.users = usersData;
+    $scope.currentAction = 'Add';
+    $scope.editUserIndex = -1;
+    
+    $scope.userForm = { username:'',location:''};
+    
+    $scope.editUser = editUser;
+    $scope.removeUser = removeUser;
+    $scope.submitForm = submitForm;
+    $scope.addUserBtnClicked = addUserBtnClicked;
+    
+    function addUser(newUserObj) {
+        $scope.users.push(newUserObj);
+    }
+    
+    function addUserBtnClicked() {
+      $scope.currentAction = 'Add';
+      $scope.userForm = { username:'',location:''};
+    }
+    
+    function removeUser(index) {
+        $scope.users.splice(index,1);   
+    }
+    
+    function updateUser(index,updatedUserObj) {
+        $scope.users[index] = updatedUserObj;
+    }
+    
+    function editUser(index) {
+        $scope.currentAction = 'Edit';
+        $scope.editUserIndex = index;
+        $scope.userForm = $scope.users[index];
+    }
+    
+    function submitForm() {
+     if($scope.currentAction === 'Add') {
+       addUser($scope.userForm);   
+     }else if($scope.currentAction === 'Edit')
+     {
+       updateUser($scope.editUserIndex,$scope.userForm);
+     }
+     $scope.userForm = { username:'',location:''};
+    }
+};
+
+usersCtrlFunction.$inject = ['$scope','usersData'];
+
+angular.module('myApp.users')
+.controller('UsersCtrl',usersCtrlFunction);
+
+
+#Step6:
+
+Modify userList.html with the following content:
+
+<div class="container">
+ <div class="row">
+    <div class="col-md-12" style="height:100px;"></div>   
+ </div>
+ <div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <h2>User Form</h2>
+            <h3 ng-show="currentAction"> [Action = {{ currentAction }} ] </h3>
+        </div>
+        <div class="row">
+       <div class="form-group col-md-6">
+        <label for="username">Username:</label>
+        <input type="text" class="form-control" id="username" ng-model="userForm.username">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="location">Location:</label>
+        <input type="text" class="form-control" id="location" ng-model="userForm.location">
+      </div>
+        </div>
+        <div class="row" style="padding-left:18px;">
+            <button type="submit" ng-click="submitForm()" class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+ </div>
+ <div class="row">
+    <h2>Users List  <button type="submit" class="btn btn-primary" ng-click="addUserBtnClicked()">ADD +</button></h2>
+    <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Sr No.</th>
+        <th>Username</th>
+        <th>Location</th>
+        <th>Action 1</th>
+        <th>Action 2</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="user in users">
+        <td>{{ $index+1 }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.location }}</td>
+        <td><button class="btn btn-primary" ng-click="editUser($index)">Edit</button></td>
+        <td><button class="btn btn-danger" ng-click="removeUser($index)">Delete</button></td>
+      </tr>
+    </tbody>
+  </table>
+ </div>
+</div>
+
