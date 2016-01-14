@@ -1,8 +1,14 @@
 
-var usersCtrlFunction = function($scope,usersData) {
-    console.log(usersData);
+var usersCtrlFunction = function($scope,$http,config) {
 
-    $scope.users = usersData;
+    $scope.loading = false;
+    var baseUrl = config.baseUrl;
+
+    getUsersData(function(response){
+      $scope.users = response;
+      $scope.loading = false;
+    });
+
     $scope.currentAction = 'Add';
     $scope.editUserIndex = -1;
     
@@ -12,6 +18,20 @@ var usersCtrlFunction = function($scope,usersData) {
     $scope.removeUser = removeUser;
     $scope.submitForm = submitForm;
     $scope.addUserBtnClicked = addUserBtnClicked;
+
+    function getUsersData(callback) {
+      $http.get(baseUrl+'/users')
+      .success(function(data, status, headers, config) {
+        // this callback will be called asynchronously
+        // when the response is available
+        callback(data);
+      }).
+      error(function(data, status, headers, config) {
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+        callback(false);
+      });
+    }
     
     function addUser(newUserObj) {
         $scope.users.push(newUserObj);
@@ -47,7 +67,7 @@ var usersCtrlFunction = function($scope,usersData) {
     }
 };
 
-usersCtrlFunction.$inject = ['$scope','usersData'];
+usersCtrlFunction.$inject = ['$scope','$http','config'];
 
 angular.module('myApp.users')
 .controller('UsersCtrl',usersCtrlFunction);

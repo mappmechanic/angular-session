@@ -9,6 +9,10 @@ angular.module('myApp.users', ['ngRoute'])
   });
 }])
 
+.constant('config',{
+  baseUrl:'http://localhost:3000'
+})
+
 .value('usersData',[
     {
       username:'john',
