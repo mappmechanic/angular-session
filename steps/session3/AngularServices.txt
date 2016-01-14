@@ -1,0 +1,56 @@
+#Step1:
+
+Create a new file with the name userService.js in users folder.
+
+#Step2:
+
+Paste the following code in the file:
+
+var userServiceFunc = function($http) {
+	var baseUrl = 'http://localhost:3000';
+
+	return { getUsers:getUsersData }
+
+	function getUsersData(callback) {
+      $http.get(baseUrl+'/users')
+      .success(function(data, status, headers, config) {
+        // this callback will be called asynchronously
+        // when the response is available
+        callback(data);
+      }).
+      error(function(data, status, headers, config) {
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+        callback(false);
+      });
+    }
+}
+
+userServiceFunc.$inject = ['$http'];
+
+angular.module('myApp.users')
+.factory('UserService',userServiceFunc);
+
+#Step3:
+
+Add the script reference of userService.js in Index.html
+
+<script src="users/userService.js"></script>
+
+#Step4:
+
+Inject the UserService object into the dependencies of your UsersCtrl
+
+#Step4:
+
+Change the reference in UsersCtrl where getUsersData was called.
+
+  UserService.getUsers(function(response){
+              if(!response) {
+                $scope.error = {message:'Server error'};
+              }else {
+               $scope.users = response;
+              }
+             $scope.loading = false;
+  });
+

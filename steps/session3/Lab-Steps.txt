@@ -1,0 +1,142 @@
+ #Step1: 
+Installing REST API mocking npm module using the command:
+'npm install -g json-server'
+
+
+#Step2:
+Create a new file 'db.json' with the following content:
+
+	{
+	  "contacts": [
+	    { "id": 1, "name": "steve gordon", "mobile": "01-023-3843" },
+	    { "id": 1, "name": "john philip", "mobile": "923-234-3986" },
+	    { "id": 1, "name": "manning", "mobile": "98372-93872" },
+	    { "id": 1, "name": "ram paswan", "mobile": "65-013-2938" },
+	    { "id": 1, "name": "jeff emerson", "mobile": "91-654-3843" }
+	  ],
+	  "users": [
+	    { "id":1, "username":"john","location":"Los Angeles" },
+	    { "id":2, "username":"madison","location":"New York" },
+	    { "id":3, "username":"vivek","location":"New Delhi" },
+	    { "id":4, "username":"alice","location":"London" },
+	    { "id":5, "username":"sherlock","location":"Southampton" },
+	    { "id":6, "username":"rahul","location":"Bangalore" }
+	  ]
+	}
+
+
+#Step3:
+Start the JSON Server going to the folder of the db.json file from the command prompt and typing the following dommand:
+
+'json-server --watch db.json'
+
+
+#Step4:
+Add a new constant to define the base API Url in users.module.js
+
+.constant('config',{
+  baseUrl:'http://localhost:3000'
+});
+
+
+#Step5:
+In Users Controller, add $http module into Dependency Injection
+Also, add a function getUsersData to make an Ajax call and get User Data
+
+function getUsersData(callback) {
+      $http.get(baseUrl+'/users')
+      .success(function(data, status, headers, config) {
+        // this callback will be called asynchronously
+        // when the response is available
+        callback(data);
+      }).
+      error(function(data, status, headers, config) {
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+        callback(false);
+      });
+ }
+
+
+#Step6:
+Add a loader in usersList.html
+	<div class="row" ng-show="loading">
+	    <img src="download.gif" style="width:40px;">
+	</div>
+
+
+#Step7:
+Replace the assignment of $scope.users to the following code in usersCtrl.js:
+
+	$scope.loading = true;
+
+	getUsersData(function(response){
+	      $scope.users = response;
+	      $scope.loading = false;
+	});
+
+#Step7.5:
+Inject config constant to your UsersCtrl and write the following code in the beginning of the controller:
+    var baseUrl = config.baseUrl;
+    
+
+#Step8:
+Update Add User function to make $http post request.
+
+function addUser(newUserObj) {
+        $scope.loading = true;
+        $http.post(baseUrl+'/users',newUserObj)
+        .success(function(data) {
+          $scope.users.push(newUserObj);
+          $scope.loading = false;
+        })
+        .error(function(data){
+          alert("Could not add a new user !");
+          $scope.loading = false;
+        });
+}
+
+
+#Step9:
+Update updateUser method to make a PUT http request
+
+function updateUser(index,updatedUserObj) {
+        var req = {
+         method: 'PUT',
+         url: baseUrl+'/users/'+updatedUserObj.id,
+         data: updatedUserObj
+        }
+        $http(req)
+        .success(function(data){
+          $scope.users[index] = updatedUserObj;
+        })
+        .error(function(data){
+          alert("Could not edit the user !");
+          $scope.loading = false;
+        });
+}
+
+
+#Step10:
+Update the removeUser function to perform a http delete operation
+
+function removeUser(index) {
+        $scope.loading = true;
+        var id = $scope.users[index].id;
+        $http.delete(baseUrl+'/users/'+id)
+        .success(function(data) {
+          $scope.users.splice(index,1); 
+          $scope.loading = false;
+        })
+        .error(function(data){
+          alert("Could not delete the user !");
+          $scope.loading = false;
+        });  
+}
+
+
+
+
+
+
+

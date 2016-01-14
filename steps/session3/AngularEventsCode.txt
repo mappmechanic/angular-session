@@ -1,0 +1,47 @@
+#Step1:
+
+Copy and paste this code in your run block in app.js 
+
+.run(['$rootScope',function($rootScope){
+	var routeChangeSuccessHandler = function(event,newRoute,oldRoute){
+		console.log('Route Change Success');
+		console.log(newRoute);
+		if(newRoute.loadedTemplateUrl === "users/usersList.html")
+		{
+			console.log('userViewLoaded event being broadcasted');
+			$rootScope.$broadcast('userVisit');
+		}
+	};
+
+	$rootScope.welcomeMessage = "Testing";
+
+	$rootScope.$on('$routeChangeSuccess',routeChangeSuccessHandler);
+
+	$rootScope.$on('$routeChangeError',function(event,oldRoute,newRoute){
+		console.log('Route Change Error');
+	});
+
+	$rootScope.login = function() {
+		setTimeout(function() {
+			$rootScope.$broadcast('loginSuccessful',
+				{userId:23,sessionToken:'3432432423'});
+		},1000);
+	}
+
+
+	$rootScope.$on('userVisit',function(event,data){
+		console.log('User Visit event was handled :'+event);
+		console.log(data);
+	});
+
+}]);
+
+#Step2:
+
+Add an Event Listener on scope of UsersCtrl 
+
+$scope.$on('loginSuccessful',function(eventInfo,data){
+      console.log('Login loginSuccessful event occurred');
+      console.log(data);
+      $scope.$emit('userVisit',{userId:24324});
+});
