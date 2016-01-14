@@ -1,14 +1,19 @@
 
-var usersCtrlFunction = function($scope,$http,config) {
+var usersCtrlFunction = function($scope,$http,config,UserService) {
 
     $scope.loadingContent = "<div><b>LOADING...</b></div>";
 
     var baseUrl = config.baseUrl;
 
-    getUsersData(function(response){
-      $scope.users = response;
-      $scope.loading = false;
-    });
+   UserService.getUsers(function(response){
+      if(!response) {
+        $scope.error = {message:'Server error'};
+      }else {
+       $scope.users = response;
+       $scope.no  = UserService.findNoOfUsers(response);
+      }
+     $scope.loading = false;
+   });
 
     $scope.currentAction = 'Add';
     $scope.editUserIndex = -1;
@@ -25,23 +30,6 @@ var usersCtrlFunction = function($scope,$http,config) {
       console.log(data);
       $scope.$emit('userVisit',{userId:24324});
     });
-
-
-    function getUsersData(callback) {
-      $http.get(baseUrl+'/users')
-      .success(function(data, status, headers, config) {
-        console.log('got the data');
-        // this callback will be called asynchronously
-        // when the response is available
-        callback(data);
-      }).
-      error(function(data, status, headers, config) {
-        // called asynchronously if an error occurs
-        // or server returns response with an error status.
-        callback(false);
-      });
-      console.log('getUsersDataExecution over');
-    }
     
     function addUser(newUserObj) {
         $scope.loading = true;
@@ -108,7 +96,7 @@ var usersCtrlFunction = function($scope,$http,config) {
     }
 };
 
-usersCtrlFunction.$inject = ['$scope','$http','config'];
+usersCtrlFunction.$inject = ['$scope','$http','config','UserService'];
 
 angular.module('myApp.users')
 .controller('UsersCtrl',usersCtrlFunction);
