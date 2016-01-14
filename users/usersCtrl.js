@@ -20,6 +20,13 @@ var usersCtrlFunction = function($scope,$http,config) {
     $scope.submitForm = submitForm;
     $scope.addUserBtnClicked = addUserBtnClicked;
 
+    $scope.$on('loginSuccessful',function(eventInfo,data){
+      console.log('Login loginSuccessful event occurred');
+      console.log(data);
+      $scope.$emit('userVisit',{userId:24324});
+    });
+
+
     function getUsersData(callback) {
       $http.get(baseUrl+'/users')
       .success(function(data, status, headers, config) {
