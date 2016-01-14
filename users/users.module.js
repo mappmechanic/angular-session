@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.users', ['ngRoute'])
+angular.module('myApp.users', ['ngRoute','ngSanitize'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/users', {

@@ -25,7 +25,7 @@
     </div>
  </div>
  <div class="row" ng-show="loading">
-      LOADING... <img src="download.gif" style="width:40px;">
+      <div ng-bind-html="loadingContent"></div>
   </div>
  <div class="row">
     <h2>Users List  <button type="submit" class="btn btn-primary" ng-click="addUserBtnClicked()">ADD +</button></h2>

@@ -1,7 +1,8 @@
 
 var usersCtrlFunction = function($scope,$http,config) {
 
-    $scope.loading = false;
+    $scope.loadingContent = "<div><b>LOADING...</b></div>";
+
     var baseUrl = config.baseUrl;
 
     getUsersData(function(response){
@@ -22,6 +23,7 @@ var usersCtrlFunction = function($scope,$http,config) {
     function getUsersData(callback) {
       $http.get(baseUrl+'/users')
       .success(function(data, status, headers, config) {
+        console.log('got the data');
         // this callback will be called asynchronously
         // when the response is available
         callback(data);
@@ -31,10 +33,19 @@ var usersCtrlFunction = function($scope,$http,config) {
         // or server returns response with an error status.
         callback(false);
       });
+      console.log('getUsersDataExecution over');
     }
     
     function addUser(newUserObj) {
-        $scope.users.push(newUserObj);
+        $scope.loading = true;
+        $http.post(baseUrl+'/users',newUserObj)
+        .then(function(data) {
+          $scope.users.push(newUserObj);
+          $scope.loading = false;
+        },function(data){
+          alert("Could not add a new user !");
+          $scope.loading = false;
+        });
     }
     
     function addUserBtnClicked() {
@@ -43,12 +54,35 @@ var usersCtrlFunction = function($scope,$http,config) {
     }
     
     function removeUser(index) {
-        $scope.users.splice(index,1);   
+        $scope.loading = true;
+        var id = $scope.users[index].id;
+        $http.delete(baseUrl+'/users/'+id)
+        .success(function(data) {
+          $scope.users.splice(index,1); 
+          $scope.loading = false;
+        })
+        .error(function(data){
+          alert("Could not delete the user !");
+          $scope.loading = false;
+        });  
     }
     
     function updateUser(index,updatedUserObj) {
-        $scope.users[index] = updatedUserObj;
+        var req = {
+         method: 'PUT',
+         url: baseUrl+'/users/'+updatedUserObj.id,
+         data: updatedUserObj
+        }
+        $http(req)
+        .success(function(data){
+          $scope.users[index] = updatedUserObj;
+        })
+        .error(function(data){
+          alert("Could not edit the user !");
+          $scope.loading = false;
+        });
     }
+
     
     function editUser(index) {
         $scope.currentAction = 'Edit';
