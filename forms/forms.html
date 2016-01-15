@@ -5,6 +5,12 @@ CODE START -->
        <div>
         <h1>Forms</h1>
         <div>
+          <input ng-model="greeting" type="text"><br>
+          No filter: {{greeting}}<br>
+          Reverse: {{greeting|reverse}}<br>
+          Reverse + uppercase: {{greeting|reverse:true}}<br>
+        </div>
+        <!-- Exercise 5 <div>
 
           <p>Looping with objects:</p><br>
           Sort By:
@@ -29,7 +35,7 @@ CODE START -->
              <span>{{'1288323623006' | date:'MM/dd/yyyy @ h:mma'}}</span><br>
           <span ng-non-bindable>{{1288323623006 | date:"MM/dd/yyyy 'at' h:mma"}}</span>:
              <span>{{'1288323623006' | date:"MM/dd/yyyy 'at' h:mma"}}</span>
-        </div>
+        </div> -->
          <!--Exercise 4 <form name="form" class="css-form" novalidate>
           <div>
             Size (integer 0 - 10):
