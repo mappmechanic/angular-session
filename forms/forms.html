@@ -4,7 +4,33 @@ CODE START -->
        </div>
        <div>
         <h1>Forms</h1>
-         <form name="form" class="css-form" novalidate>
+        <div>
+
+          <p>Looping with objects:</p><br>
+          Sort By:
+          <select ng-model="sortBy">
+           <option selected value="name">Name</option>
+           <option value="location">Location</option>
+          </select><br>
+          Limit: <input ng-model="limit" value="0"><br>
+          Search: <input ng-model="searchTxt"><br>
+          <ul>
+            <li ng-repeat="x in names | orderBy:sortBy | limitTo:limit | filter: searchTxt">
+              {{ x.name + ', ' + x.location }}
+            </li>
+          </ul>
+          <br><br>
+          Price for Product 1 : {{ 372675 | currency: 'INR' : 1 }} <br><br>
+          <span ng-non-bindable>{{1288323623006 | date:'medium'}}</span>:
+              <span>{{1288323623006 | date:'medium'}}</span><br>
+          <span ng-non-bindable>{{1288323623006 | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>:
+             <span>{{1288323623006 | date:'yyyy-MM-dd HH:mm:ss Z'}}</span><br>
+          <span ng-non-bindable>{{1288323623006 | date:'MM/dd/yyyy @ h:mma'}}</span>:
+             <span>{{'1288323623006' | date:'MM/dd/yyyy @ h:mma'}}</span><br>
+          <span ng-non-bindable>{{1288323623006 | date:"MM/dd/yyyy 'at' h:mma"}}</span>:
+             <span>{{'1288323623006' | date:"MM/dd/yyyy 'at' h:mma"}}</span>
+        </div>
+         <!--Exercise 4 <form name="form" class="css-form" novalidate>
           <div>
             Size (integer 0 - 10):
             <input type="number" ng-model="size" name="size"
@@ -23,7 +49,7 @@ CODE START -->
             <span ng-show="form.name.$error.username">This username is already taken!</span>
           </div>
 
-          </form>
+          </form> -->
         <!--Exercise 3 <div>
           <form name="form" class="css-form" novalidate>
             Username:

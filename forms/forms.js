@@ -12,6 +12,16 @@ angular.module('myApp.forms', ['ngRoute'])
 .controller('FormsController', ['$scope', function($scope) {
       $scope.master = {};
 
+      $scope.names = [
+        {name:'Jani',location:'Norway'},
+        {name:'Hege',location:'Sweden'},
+        {name:'Kai',location:'Denmark'},
+        {name:'User1',location:'Delhi'},
+        {name:'User2',location:'North America'},
+        {name:'User3',location:'South America'}
+    ];
+
+
       $scope.update = function(user) {
         if($scope.form.$valid) {
           $scope.master = angular.copy(user);
@@ -75,7 +85,7 @@ app.directive('username', function($q,$timeout) {
         }
 
         var def = $q.defer();
-
+        usernames = usernames.map(function(username){ return username.toLowerCase(); });
         $timeout(function() {
           // Mock a delayed response
           if (usernames.indexOf(modelValue) === -1) {
