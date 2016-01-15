@@ -13,13 +13,20 @@ angular.module('myApp.forms', ['ngRoute'])
       $scope.master = {};
 
       $scope.update = function(user) {
-        $scope.master = angular.copy(user);
+        if($scope.form.$valid) {
+          $scope.master = angular.copy(user);
+        }
       };
 
-      $scope.reset = function() {
+      $scope.reset = function(form) {
+        if (form) {
+          form.$setPristine();
+          form.$setUntouched();
+        }
         $scope.user = angular.copy({});
         $scope.master = angular.copy({});
       };
+
 
       $scope.typeSelected = function() {
         alert('New Type Selected');
