@@ -4,12 +4,33 @@ CODE START -->
        </div>
        <div>
         <h1>Forms</h1>
-        <div>
+        <div ng-switch="action" style="color:#395075">
+        <div ng-switch-when="add">
+          <h2>Showing Add Form for Model {{ model }}</h2>
+          <div ng-switch="model">
+            <div ng-switch-when="user">
+                Username <input type="text" placeholder="enter username">
+            </div>
+            <div ng-switch-when="contact">
+                Mobile <input type="text" placeholder="enter mobile">
+            </div>
+          </div>
+        </div>
+        <div ng-switch-when="edit">
+          <h2>Showing Edit Form for Model {{ model }} for instanceId : {{ id }}</h2>
+        </div>
+        <div ng-switch-when="remove">
+          <h2>Remove Instance of Model {{ model }} for instanceId : {{ id }}</h2>
+        </div>
+        <br><br>
+      </div>
+        
+       <!--  <div>
           <input ng-model="greeting" type="text"><br>
           No filter: {{greeting}}<br>
           Reverse: {{greeting|reverse}}<br>
           Reverse + uppercase: {{greeting|reverse:true}}<br>
-        </div>
+        </div> -->
         <!-- Exercise 5 <div>
 
           <p>Looping with objects:</p><br>
