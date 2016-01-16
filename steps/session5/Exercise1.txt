@@ -1,0 +1,44 @@
+#Step1:
+Add dependency injection $routeParams to FormsCtrl
+
+Update the URL route to '/forms/:model/:id'
+
+
+
+#Step 2:
+
+Update the FormsCtrl Controller with following logic to show content based on RouteParams
+
+
+ $scope.model = $routeParams['model'] ? $routeParams['model'] : '' ;
+ 
+ $scope.id = $routeParams['id'] ? $routeParams['id'] : 0;
+ 
+ $scope.action = $routeParams['action'] ? $routeParams['action'] : 'add';
+
+
+#Step 3:
+
+Update the forms.html with the following content:
+
+  <div ng-switch="action" style="color:#395075">
+    <div ng-switch-when="add">
+      <h2>Showing Add Form for Model {{ model }}</h2>
+      <div ng-switch="model">
+        <div ng-switch-when="user">
+            Username <input type="text" placeholder="enter username">
+        </div>
+        <div ng-switch-when="contact">
+            Mobile <input type="text" placeholder="enter mobile">
+        </div>
+      </div>
+    </div>
+    <div ng-switch-when="edit">
+      <h2>Showing Edit Form for Model {{ model }} for instanceId : {{ id }}</h2>
+    </div>
+    <div ng-switch-when="remove">
+      <h2>Remove Instance of Model {{ model }} for instanceId : {{ id }}</h2>
+    </div>
+    <br><br>
+  </div>
+

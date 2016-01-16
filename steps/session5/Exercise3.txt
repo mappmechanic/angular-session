@@ -1,0 +1,47 @@
+ #Step 1
+
+Registering a Custom User Directive to show a list of Users
+
+angular.module('myApp.forms')
+.directive('appUser', function() {
+  return {
+    restrict: 'E',
+    scope: {
+      userData: '=info'
+    },
+    templateUrl: 'userElement.html'
+  };
+});
+
+
+#Step 2
+
+Add a new 'userElement.html' file
+
+Name: {{userData.name}} <br>
+Location: {{userData.location}}
+
+#Step 3
+
+In FormsCtrl, update to $scope.names array to $scope.users array - and pass it dynamically to the directives in forms.html template
+
+$scope.users = [
+        {name:'Jani',location:'Norway'},
+        {name:'Hege',location:'Sweden'},
+        {name:'Kai',location:'Denmark'},
+        {name:'Ram',location:'Delhi'},
+        {name:'John',location:'Mumbai'}
+ ];
+
+
+#Step 4
+
+In forms.html, update the following code:
+
+ <ul>
+    <li ng-repeat="user in users">
+      <app-user info="user"></app-user>
+    </li>
+ </ul>
+
+

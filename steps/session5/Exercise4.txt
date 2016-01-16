@@ -1,0 +1,50 @@
+
+#Step 1
+
+Add new file called directives.js in app folder
+
+(function() {
+
+  var app = angular.module('directivesModule',[]);
+
+  app.directive('domDirective', function () {
+      return {
+          restrict: 'A',
+          scope: {
+            hoverColor:'@hovercolor'
+          },
+          link: function ($scope, element, attrs) {
+
+              element.on('click', function () {
+                  element.html('You clicked me!');
+              });
+              element.on('mouseenter', function () {
+                  element.css('background-color', $scope.hoverColor);
+              });
+              element.on('mouseleave', function () {
+                  element.css('background-color', 'white');
+              });
+          }
+      };
+  });
+
+}());
+
+#Step 2
+Add a new reference in index.html
+
+#Step 3
+Add 'directivesModule' to dependency injection list in app.js
+
+#Step 4
+Add Elements on which directive is applied
+
+<div style="height:140px;width:140px;border:2px solid;margin:10px;"
+dom-directive hovercolor="blue">
+  Dom Element
+</div>
+
+<div style="height:140px;width:140px;border:2px solid;margin:10px;" 
+dom-directive hovercolor="orange">
+  Dom Element
+</div>
