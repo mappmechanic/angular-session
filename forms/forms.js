@@ -34,7 +34,7 @@ angular.module('myApp.forms')
   return {
     restrict: 'E',
     scope: {
-      userData: '=info'
+      userData: '='
     },
     templateUrl: 'userElement.html'
   };

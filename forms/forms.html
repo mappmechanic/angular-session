@@ -4,9 +4,23 @@
        <div>
         <h1>Forms</h1>
 
+        <div style="height:140px;width:140px;border:2px solid;margin:10px;"
+        dom-directive hover-color="blue">
+          Dom Element
+        </div>
+
+        <div style="height:140px;width:140px;border:2px solid;margin:10px;" 
+        dom-directive hover-color="orange">
+          Dom Element
+        </div>
+
+<br><br>
+
+       <!--  <textarea ng-model="users[0].name"></textarea>
+ -->
         <ul>
           <li ng-repeat="user in users">
-            <app-user info="user"></app-user>
+            <app-user user-data="user"></app-user>
           </li>
        </ul>
 
