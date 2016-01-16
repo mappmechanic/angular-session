@@ -4,6 +4,7 @@ CODE START -->
        </div>
        <div>
         <h1>Forms</h1>
+        <h2>{{ title }}</h2>
         <div ng-switch="action" style="color:#395075">
         <div ng-switch-when="add">
           <h2>Showing Add Form for Model {{ model }}</h2>
@@ -24,7 +25,7 @@ CODE START -->
         </div>
         <br><br>
       </div>
-        
+
        <!--  <div>
           <input ng-model="greeting" type="text"><br>
           No filter: {{greeting}}<br>

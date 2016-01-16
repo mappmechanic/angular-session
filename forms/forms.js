@@ -9,7 +9,10 @@ angular.module('myApp.forms', ['ngRoute'])
   });
 }])
 
-.controller('FormsController', ['$scope','$routeParams', function($scope,$routeParams) {
+.controller('FormsController', ['$scope','$routeParams','movie', function($scope,$routeParams,movie){
+
+  $scope.title = movie.title;
+
   $scope.model = $routeParams['model'] ? $routeParams['model'] : '' ;
  
   $scope.id = $routeParams['id'] ? $routeParams['id'] : 0;
@@ -17,6 +20,38 @@ angular.module('myApp.forms', ['ngRoute'])
   $scope.action = $routeParams['action'] ? $routeParams['action'] : 'add';
 
 }]);
+
+// Provider
+var app = angular.module('myApp.forms');
+
+app.provider('movie', function () {
+  var version;
+  return {
+    setVersion: function (value) {
+      version = value;
+    },
+    $get: function () {
+      return {
+          title: 'The Matrix' + ' ' + version
+      }
+    }
+  }
+});
+ 
+app.config(function (movieProvider) {
+  movieProvider.setVersion('v23');
+});
+
+
+// Decorators
+ 
+app.value('movieTitle', 'The Matrix');
+ 
+app.config(function ($provide) {
+  $provide.decorator('movieTitle', function ($delegate) {
+    return $delegate + ' - starring Test Reeves';
+  });
+});
 
 // angular.module('myApp')
 // .filter('reverse', function() {
