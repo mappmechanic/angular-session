@@ -1,11 +1,17 @@
-CODE START -->
     <div class="container">
        <div style="height:100px">
        </div>
        <div>
         <h1>Forms</h1>
-        <h2>{{ title }}</h2>
-        <div ng-switch="action" style="color:#395075">
+
+        <ul>
+          <li ng-repeat="user in users">
+            <app-user info="user"></app-user>
+          </li>
+       </ul>
+
+       <!--  <h2>{{ title }}</h2> -->
+        <!-- <div ng-switch="action" style="color:#395075">
         <div ng-switch-when="add">
           <h2>Showing Add Form for Model {{ model }}</h2>
           <div ng-switch="model">
@@ -24,7 +30,7 @@ CODE START -->
           <h2>Remove Instance of Model {{ model }} for instanceId : {{ id }}</h2>
         </div>
         <br><br>
-      </div>
+      </div> -->
 
        <!--  <div>
           <input ng-model="greeting" type="text"><br>

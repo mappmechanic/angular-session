@@ -11,6 +11,14 @@ angular.module('myApp.forms', ['ngRoute'])
 
 .controller('FormsController', ['$scope','$routeParams','movie', function($scope,$routeParams,movie){
 
+  $scope.users = [
+        {name:'Jani',location:'Norway'},
+        {name:'Hege',location:'Sweden'},
+        {name:'Kai',location:'Denmark'},
+        {name:'Ram',location:'Delhi'},
+        {name:'John',location:'Mumbai'}
+ ];
+
   $scope.title = movie.title;
 
   $scope.model = $routeParams['model'] ? $routeParams['model'] : '' ;
@@ -20,6 +28,17 @@ angular.module('myApp.forms', ['ngRoute'])
   $scope.action = $routeParams['action'] ? $routeParams['action'] : 'add';
 
 }]);
+
+angular.module('myApp.forms')
+.directive('appUser', function() {  // <app-user info=""></app-user>
+  return {
+    restrict: 'E',
+    scope: {
+      userData: '=info'
+    },
+    templateUrl: 'userElement.html'
+  };
+});
 
 // Provider
 var app = angular.module('myApp.forms');
@@ -38,8 +57,11 @@ app.provider('movie', function () {
   }
 });
  
-app.config(function (movieProvider) {
+app.config(function (movieProvider,$provide) {
   movieProvider.setVersion('v23');
+  $provide.decorator('movie', function ($delegate) {
+    return {title:'MOVIE -'+ $delegate.title};
+  });
 });
 
 
