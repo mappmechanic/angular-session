@@ -19,6 +19,10 @@ angular.module('myApp.forms', ['ngRoute'])
         {name:'John',location:'Mumbai'}
  ];
 
+ $scope.addItemHook = function(itemno) {
+  alert('new item added at no ' + itemno + ' in directive');
+ }
+
   $scope.title = movie.title;
 
   $scope.model = $routeParams['model'] ? $routeParams['model'] : '' ;
